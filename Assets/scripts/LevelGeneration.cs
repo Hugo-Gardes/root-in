@@ -12,10 +12,11 @@ public class LevelGeneration : MonoBehaviour
     public float maxX;
     public float minY;
     public LayerMask room;
+    public bool stop = true;
+    public GameObject player;
     private int direction;
     private float timeBtwRoom = 0f;
     private Vector2 newPos = Vector2.zero;
-    private bool stop = true;
     private int preced = 0;
     private int down_count = 0;
 
@@ -23,11 +24,14 @@ public class LevelGeneration : MonoBehaviour
     {
         int randStartingPos = Random.Range(0, startingPositions.Length);
         transform.position = startingPositions[randStartingPos].position;
-        Instantiate(rooms[0], transform.position, Quaternion.identity);
+        GameObject crroom = Instantiate(rooms[0], transform.position, Quaternion.identity);
 
         direction = Random.Range(1, 6);
         preced = direction;
         Debug.Log("starting point = " + transform.position);
+        GameObject playeri = Instantiate(player, transform.position, Quaternion.identity);
+        playeri.transform.position = crroom.GetComponent<RoomType>().startPlayerPos.transform.position;
+        playeri.GetComponent<characterMovement>().levelGeneration = gameObject.GetComponent<LevelGeneration>();
     }
 
     int get_random_bottom() {

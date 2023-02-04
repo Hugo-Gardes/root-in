@@ -6,11 +6,10 @@ public class CharacterController : MonoBehaviour
 {
     public Animator animator;
     public float speed = 1.0f;
-    public float jumpSpeed = 20.0f;
-    // public float distToGround = 10.0f;
-    // public LayerMask groundLayer;
-    // public bool doubleJump = true;
-    // public bool canjump_double = true;
+    public float jumpSpeed = 2.0f;
+    public float dir = 1.0f;
+    public float distToGround = 0.8f;
+    public LayerMask groundLayer;
 
     public void Hit()
     {
@@ -22,43 +21,58 @@ public class CharacterController : MonoBehaviour
         animator.SetBool("hit", false);
     }
 
-    /* bool IsGrounded()
+    void Rotate()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, distToGround + (float)0.1, groundLayer);
+        transform.Rotate(Vector3.up * 180);
+        dir *= -1.0f;
+    }
+
+    bool IsGrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, distToGround + 0.1f, groundLayer);
         return (hit.collider != null);
-    } */
+    }
 
     void Update()
     {
-        // bool grounded = false;
+        speed = 1.0f;
+
         if (Input.GetKey("q"))
         {
+            if (dir != -1.0f)
+                this.Rotate();
+            if (Input.GetKey("left shift"))
+            {
+                animator.SetBool("run", true);
+                speed = 2.0f;
+            } else
+                animator.SetBool("run", false);
             animator.SetBool("walk", true);
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
+            transform.Translate(Vector3.left * speed * dir * Time.deltaTime);
         }
         else if (Input.GetKey("d"))
         {
+            if (dir != 1.0f)
+                this.Rotate();
+            if (Input.GetKey("left shift"))
+            {
+                animator.SetBool("run", true);
+                speed = 2.0f;
+            }
+            else
+                animator.SetBool("run", false);
             animator.SetBool("walk", true);
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
+            transform.Translate(Vector3.right * speed * dir * Time.deltaTime);
         } else
         {
             animator.SetBool("walk", false);
             animator.SetBool("run", false);
         }
 
-        if (Input.GetKey("space"))
+        if (Input.GetKey("space") && IsGrounded())
         {
             animator.SetBool("jump", true);
-            GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpSpeed * Time.deltaTime);
-            /*grounded = IsGrounded();
-            if (grounded || doubleJump)
-            {
-                if (!grounded && doubleJump)
-                {
-                    doubleJump = false;
-                }
-                GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpSpeed);
-            }*/
+            GetComponent<Rigidbody2D>().AddForce(Vector3.up * jumpSpeed);
         } else
         {
             animator.SetBool("jump", false);
@@ -68,12 +82,5 @@ public class CharacterController : MonoBehaviour
         {
             animator.SetBool("attack", true);
         }
-        /*if (canjump_double && !doubleJump)
-        {
-            if (IsGrounded())
-            {
-                doubleJump = true;
-            }
-        }*/
     }
 }

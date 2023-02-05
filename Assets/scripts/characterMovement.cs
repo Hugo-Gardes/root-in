@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class characterMovement : MonoBehaviour
 {
+    public Animator animator;
     public float speed = 1.0f;
-    public float jumpSpeed = 1.0f;
+    public float jumpSpeed = 20.0f;
     public float distToGround = 10.0f;
     public LayerMask groundLayer;
     public LayerMask objLayer;
@@ -17,6 +18,23 @@ public class characterMovement : MonoBehaviour
     public Vector2 starting_point;
     public LayerMask room;
     public int lives = 3;
+    private float dir = 1;
+
+    public void Hit()
+    {
+        animator.SetBool("hit", true);
+    }
+
+    public void Heal()
+    {
+        animator.SetBool("hit", false);
+    }
+
+    void Rotate()
+    {
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        dir *= -1.0f;
+    }
 
     bool IsGrounded() {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, distToGround + (float)0.1, groundLayer);
@@ -26,6 +44,7 @@ public class characterMovement : MonoBehaviour
 
     void LateUpdate() {
         Collider2D hit;
+        bool is_pass = false;
         if (m_Rigidbody.constraints == (RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation)) {
             if (!levelGeneration.stop) {
                 hit = Physics2D.OverlapCircle(transform.position, 3f, room);
@@ -38,14 +57,24 @@ public class characterMovement : MonoBehaviour
             }
         }
         bool grounded = false;
-        if (Input.GetKey("z"))
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        if (Input.GetKey("q"))
+        if (Input.GetKey("q")) {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
-        if (Input.GetKey("s"))
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        if (Input.GetKey("d"))
+            if (dir != -1.0f)
+                Rotate();
+            animator.SetBool("walk", true);
+            is_pass = true;
+        }
+        if (Input.GetKey("d")) {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
+            if (dir != 1.0f)
+                Rotate();
+            animator.SetBool("walk", true);
+            is_pass = true;
+        }
+        if (!is_pass) {
+            animator.SetBool("walk", false);
+            animator.SetBool("run", false);
+        }
         if (Input.GetKey("space")) {
             grounded = IsGrounded();
             if (grounded || doubleJump) {
@@ -54,6 +83,9 @@ public class characterMovement : MonoBehaviour
                 }
                 m_Rigidbody.AddForce(Vector3.up * jumpSpeed);
             }
+            animator.SetBool("jump", true);
+        } else {
+            animator.SetBool("jump", false);
         }
         if (canjump_double && !doubleJump) {
             if (IsGrounded()) {

@@ -8,13 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - World
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - room
+  - panneau
+  - player
+  - obj
   - 
   - 
   - 

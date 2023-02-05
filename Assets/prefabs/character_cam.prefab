@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4209746645281708847}
   - component: {fileID: 4209746645281708842}
   - component: {fileID: 4209746645281708843}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: character_cam
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,15 +101,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpSpeed: 5
+  jumpSpeed: 20
   distToGround: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  objLayer:
+    serializedVersion: 2
+    m_Bits: 512
   doubleJump: 1
   canjump_double: 1
   levelGeneration: {fileID: 0}
   m_Rigidbody: {fileID: 4209746645281708842}
+  starting_point: {x: 0, y: 0}
+  room:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &4209746645281708842
 Rigidbody2D:
   serializedVersion: 4
@@ -127,9 +134,9 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 2
   m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_Interpolate: 2
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 6
 --- !u!61 &4209746645281708843
 BoxCollider2D:
@@ -168,7 +175,7 @@ GameObject:
   - component: {fileID: 5500653247558555370}
   - component: {fileID: 5500653247558555371}
   - component: {fileID: 5500653247558555368}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

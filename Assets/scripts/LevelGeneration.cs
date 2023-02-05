@@ -93,9 +93,9 @@ public class LevelGeneration : MonoBehaviour
                 rand = Random.Range(2, rooms.Length);
                 Instantiate(rooms[rand], transform.position, Quaternion.identity);
             } else {
-                cild = Physics2D.OverlapCircle(transform.position, 1, room);
-                cild.GetComponent<RoomType>().roomDestroy();
-                Instantiate(tp_room, transform.position, Quaternion.identity);
+                // cild = Physics2D.OverlapCircle(transform.position, 1, room);
+                // cild.GetComponent<RoomType>().roomDestroy();
+                // Instantiate(tp_room, transform.position, Quaternion.identity);
                 stop = false;
                 return;
             }

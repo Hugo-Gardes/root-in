@@ -52,6 +52,7 @@ public class ManageBoss : MonoBehaviour
             }
             else
             {
+                bullet.SetActive(false);
                 do_phase_three();
             }
         }
@@ -156,7 +157,34 @@ public class ManageBoss : MonoBehaviour
 
     public void do_phase_three()
     {
-        animator.SetInteger("health", 0);
-        Destroy(gameObject);
+        float speed_x = Random.Range(0f, 0.050f);
+        float speed_y = Random.Range(0f, 0.050f);
+        if (negative_x == true)
+        {
+            speed_x = -speed_x;
+        }
+        if (negative_y == true)
+        {
+            speed_y = -speed_y;
+        }
+        if (transform.position.x + speed_x > 7f)
+        {
+            negative_x = true;
+        }
+        else if (transform.position.x + speed_x < -7f)
+        {
+            negative_x = false;
+        }
+        if (transform.position.y + speed_y > 4.34f)
+        {
+            negative_y = true;
+        }
+        else if (transform.position.y + speed_y < -4.34f)
+        {
+            negative_y = false;
+        }
+        transform.position = new Vector3(transform.position.x + speed_x, transform.position.y + speed_y, transform.position.z);
+        animator.SetInteger("health", health - 1);
+        health = animator.GetInteger("health");
     }
 }

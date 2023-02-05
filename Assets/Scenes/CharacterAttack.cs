@@ -6,7 +6,7 @@ public class CharacterAttack : MonoBehaviour
 {
     public Animator animator;
 
-    private GameObject attackArea = default;
+    public GameObject attackArea;
 
     private bool attacking = false;
 
@@ -16,7 +16,6 @@ public class CharacterAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        attackArea = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame

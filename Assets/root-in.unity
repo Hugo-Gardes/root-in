@@ -1042,6 +1042,7 @@ GameObject:
   - component: {fileID: 2076172128}
   - component: {fileID: 2076172129}
   - component: {fileID: 2076172130}
+  - component: {fileID: 2076172131}
   m_Layer: 0
   m_Name: Woodcutter
   m_TagString: Untagged
@@ -1217,6 +1218,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2076172124}
+--- !u!114 &2076172131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076172123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a705fd91ef455a34daa30b46a93b6f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2076172124}
+  health: 100
 --- !u!1 &2083460371
 GameObject:
   m_ObjectHideFlags: 0
